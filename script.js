@@ -1,18 +1,24 @@
 window.promises = [];
 
-// Do not change the code above this
-// add your promises to the array `promises`
-const promises = Array.from({ length: 5 }, () => {
-  const randomTime = Math.floor(Math.random() * 5000) + 1000; // Random time between 1 and 5 seconds
-  return new Promise((resolve) => {
+// Function to generate a random time between 1 and 5 seconds
+function getRandomTime() {
+  return Math.floor(Math.random() * 5000) + 1000;
+}
+
+// Add promises to the array `promises`
+for (let i = 0; i < 5; i++) {
+  const promise = new Promise((resolve) => {
+    const randomTime = getRandomTime();
     setTimeout(() => {
-      resolve(`Promise resolved after ${randomTime} milliseconds`);
+      resolve(`Promise ${i + 1} resolved after ${randomTime} milliseconds`);
     }, randomTime);
   });
-});
+
+  window.promises.push(promise);
+}
 
 // Using Promise.any() to wait for the first promise to resolve
-Promise.any(promises)
+Promise.any(window.promises)
   .then((result) => {
     const outputDiv = document.getElementById('output');
     outputDiv.textContent = result;
